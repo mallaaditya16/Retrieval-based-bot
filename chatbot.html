@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <title>Chat Bot</title>
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+       <style>
+             .navbar{
+                    background-color: #212529;
+            }
+              .navbar-brand{
+                          color: white;
+            }
+
+                .nav-link{
+                           color: #00ad81;
+            }
+              .banner{
+                      padding-top: 10px; 
+            }
+               .chatmedium::-webkit-scrollbar {
+                              display: none;
+            }
+    </style>
+    </head>
+    <body>
+        <div class="navbar navbar-expand-sm navbar-fixed-top">
+               <div class="navbar-header col-sm-4">
+                <a class="nav-link" href="https://www.autonise.com/home"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+                  Back to autonise</a>
+               </div>
+                <div class="col-sm-4 text-center">
+            <a class="navbar-brand" href="chatbot.html">Chat Bot</a>
+                </div>
+                <div class="col-sm-4 text-right">
+                    <a class="nav-link" href="chatbot.html">Clear Chat</a>
+                </div>
+        </div>
+        <div class="container-fluid banner">
+            <div class="logo row">
+                <div class="col-sm-6 text-right" >
+                    <img class="img-responsive img-rounded"src="https://www.autonise.com/assets/goodUI/internships/chatbot/chat.svg">
+                </div>
+                <div class="col-sm-6 text-left">
+                    <h4>James</h4>
+            <p>Your personal assistant</p>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row3">
+                <div class="col-sm-10 offset-sm-1">
+                    <div class="chatmedium" style="height: 67vh; overflow-y: scroll;overflow-x: hidden;" id="chatList">
+                       <div class="row">
+                           <div class="col" id="user">
+
+                           </div>
+                       </div>
+                    </div>
+                    <nav class="navbar bg-white navbar-expand-sm d-flex justify-content-between"> <input type="text number" name="text" class="form-control" placeholder="Type a message..." id="usertext">
+                        <div class="d-flex justify-content-end align-content-center text-center"><button class="btn btn-success btn-sm" id="sendbutton" onclick="dis()">
+                            <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                                 </button></div>
+                    </nav>
+                                           </div>
+        </div>
+        <script>
+            function scrollToEnd(){
+	var chatList = document.getElementById("chatList");
+	chatList.scrollTop = chatList.scrollHeight;
+}
+              function clear(){
+                document.getElementById('usertext').value="";
+            }
+            function dis(){
+             var x=document.getElementById("usertext").value;
+              clear();
+    
+                var newdiv1=document.createElement("div");
+                newdiv1.classList.add("row");
+                newdiv1.classList.add("my-1");
+                var newdiv2=document.createElement("div");
+                var offsetdiv=document.createElement("div");
+                var imagediv=document.createElement("div");
+                offsetdiv.classList.add("col-lg-3");
+                imagediv.classList.add("col-lg-1");
+                var te=document.createElement("button")
+                newdiv2.style.wordWrap="word-break";
+                    newdiv2.style.whiteSpace="pre-wrap";
+                      newdiv2.style.wordBreak="break-word";
+                 te.setAttribute("style", "text-align:right;background-color: #157e7e;border-radius: 15px 50px 30px;padding:10px;color:white;")
+                newdiv2.style.textAlign="right";
+                newdiv1.style.alignContent="right";
+                newdiv2.classList.add("col-lg-8");
+                newdiv2.classList.add("text-right");
+               te.innerHTML+=x;
+               newdiv2.appendChild(te);
+               newdiv1.appendChild(offsetdiv)
+                 newdiv1.appendChild(newdiv2);
+               document.getElementById("user").appendChild(newdiv1);
+               loaddoc(x);
+               scrollToEnd();
+      }
+         function loaddoc(x){
+             var xhttp=new XMLHttpRequest();
+             xhttp.onreadystatechange=function(){
+                 if(this.readyState==4 && this.status==200){
+                    var newdiv3=document.createElement("div");
+                    newdiv3.classList.add("row");
+                    newdiv3.classList.add("my-1");
+                      var newdiv4=document.createElement("div");
+                      var newdiv5=document.createElement("div");
+                      var image=document.createElement("img");
+                      newdiv3.style.alignContent="left";
+                      image.src="https://www.autonise.com/assets/goodUI/internships/chatbot/chat.svg"
+                      image.style.borderRadius="50%";
+                      newdiv5.appendChild(image);
+                      var tex=document.createElement("button")
+                     newdiv4.style.wordWrap="word-break";
+                    newdiv4.style.whiteSpace="pre-wrap";
+                      newdiv4.style.wordBreak="break-word";
+                         tex.setAttribute("style", "text-align:left;background-color: #e9e9ea;border-radius: 15px 50px 30px;padding:10px;color:black;")
+                      newdiv4.classList.add("col-lg-8");
+                      newdiv5.classList.add("col-lg-1");
+                      console.log(this.responseText);
+                  tex.innerHTML+=this.responseText;
+                  newdiv4.appendChild(tex)
+                    newdiv3.appendChild(newdiv5);
+                    newdiv3.appendChild(newdiv4);
+                    document.getElementById("user").appendChild(newdiv3);
+
+                 }
+
+                 
+             };
+             url="http://3.108.191.162/api/";
+             xhttp.open("POST",url,true);
+              xhttp.send(x);
+                 scrollToEnd();
+         }
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    </body>
+</html>
